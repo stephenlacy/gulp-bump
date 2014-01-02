@@ -1,8 +1,8 @@
+#gulp-bump
 [![Build Status](https://travis-ci.org/stevelacy/gulp-bump.png?branch=master)](https://travis-ci.org/stevelacy/gulp-bump)
-
 [![NPM version](https://badge.fury.io/js/gulp-bump.png)](http://badge.fury.io/js/gulp-bump)
 
-#gulp-bump
+## Information
 
 <table>
 <tr> 
@@ -19,12 +19,14 @@
 <tr>
 <td>Gulp Version</td>
 <td>3.x</td>
-
 </tr>
 </table>
 
 ## Usage
+#### Install
+    npm install gulp-bump --save
 
+## Example
 
 ```javascript
 var gulp = require('gulp');
@@ -57,6 +59,8 @@ gulp.task('default', function(){
 });
 
 ```
+####You can view more examples in the [example folder.](https://github.com/stevelacy/gulp-bump/tree/master/examples)
+
 
 ## Options
 ### options.bump
@@ -77,9 +81,7 @@ Default: `patch`
     minor: 0.1.0
     patch: 0.0.2
 
-## Examples
 
-You can view more examples in the [example folder.](https://github.com/stevelacy/gulp-bump/tree/master/examples)
 
 ## LICENSE
 

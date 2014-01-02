@@ -1,70 +1,85 @@
 var fs = require('fs');
-var gulp = require('gulp');
+var gutil = require('gulp-util');
 var es = require('event-stream');
+var fs = require('fs');
 var should = require('should');
 var bump = require('../');
 
-
 require('mocha');
 
+
 describe('gulp-bump', function() {
-  it('should bump minor', function(done) {
-    gulp.task('bump', function(){
-      gulp.src('test/package.json')
-      .pipe(bump())
-      .pipe(es.map(function(file){
-        String(file.contents.toString()).should.equal(fs.readFileSync('test/expected/default.json').toString());
-        done();
-      }));
+  it('should bump minor by default', function(done) {
+    var fakeFile = new gutil.File({
+      base: "test/",
+      cwd: "test/",
+      path: "test/package.json",
+      contents: fs.readFileSync('test/package.json')
     });
-    gulp.run('bump');
+    var bumpS = bump();
+    bumpS.once('data', function(newFile){
+      should.exist(newFile);
+      should.exist(newFile.path);
+      should.exist(newFile.contents);
+      String(newFile.contents).should.equal(fs.readFileSync('test/expected/default.json', 'utf8'));
+      done();
+    });
+    bumpS.write(fakeFile);
   });
 
   it('should bump major if options.bump = major', function(done) {
-    gulp.task('bump', function(){
-      var options = {
-        bump: 'major'
-      };
-      gulp.src('test/package.json')
-      .pipe(bump(options))
-      .pipe(es.map(function(file){
-        String(file.contents.toString()).should.equal(fs.readFileSync('test/expected/major.json').toString());
-        done();
-      }));
+    var fakeFile = new gutil.File({
+      base: "test/",
+      cwd: "test/",
+      path: "test/package.json",
+      contents: fs.readFileSync('test/package.json')
+    });    
+    var bumpS = bump({bump: 'major'});
+    bumpS.once('data', function(newFile){
+      should.exist(newFile);
+      should.exist(newFile.path);
+      should.exist(newFile.contents);
+      String(newFile.contents).should.equal(fs.readFileSync('test/expected/major.json', 'utf8'));
+      done();
     });
-    gulp.run('bump');
+    bumpS.write(fakeFile);
   });
-
   it('should bump minor if options.bump = minor', function(done) {
-    gulp.task('bump', function(){
-      var options = {
-        bump: 'minor'
-      };
-      gulp.src('test/package.json')
-      .pipe(bump(options))
-      .pipe(es.map(function(file){
-        String(file.contents.toString()).should.equal(fs.readFileSync('test/expected/minor.json').toString());
-        done();
-      }));
+    var fakeFile = new gutil.File({
+      base: "test/",
+      cwd: "test/",
+      path: "test/package.json",
+      contents: fs.readFileSync('test/package.json')
+    });    
+    var bumpS = bump({bump: 'minor'});
+    bumpS.once('data', function(newFile){
+      should.exist(newFile);
+      should.exist(newFile.path);
+      should.exist(newFile.contents);
+      String(newFile.contents).should.equal(fs.readFileSync('test/expected/minor.json', 'utf8'));
+      done();
     });
-    gulp.run('bump');
+    bumpS.write(fakeFile);
   });
+
+
   it('should ignore and pass "patch" if options.bump is not Semantic', function(done) {
-    gulp.task('bump', function(){
-      var options = {
-        bump: 'invalid'
-      };
-      gulp.src('test/package.json')
-      .pipe(bump(options))
-      .pipe(es.map(function(file){
-        String(file.contents.toString()).should.equal(fs.readFileSync('test/expected/default.json').toString());
-        done();
-      }));
+    var fakeFile = new gutil.File({
+      base: "test/",
+      cwd: "test/",
+      path: "test/package.json",
+      contents: fs.readFileSync('test/package.json')
     });
-    gulp.run('bump');
+    var bumpS = bump({bump: 'invalid'});
+    bumpS.once('data', function(newFile){
+      should.exist(newFile);
+      should.exist(newFile.path);
+      should.exist(newFile.contents);
+      String(newFile.contents).should.equal(fs.readFileSync('test/expected/default.json', 'utf8'));
+      done();
+    });
+    bumpS.write(fakeFile);
   });
-
-
 
 
 });

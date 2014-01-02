@@ -33,7 +33,7 @@ describe('gulp-bump', function() {
       cwd: "test/",
       path: "test/package.json",
       contents: fs.readFileSync('test/package.json')
-    });    
+    });
     var bumpS = bump({bump: 'major'});
     bumpS.once('data', function(newFile){
       should.exist(newFile);
@@ -50,7 +50,7 @@ describe('gulp-bump', function() {
       cwd: "test/",
       path: "test/package.json",
       contents: fs.readFileSync('test/package.json')
-    });    
+    });
     var bumpS = bump({bump: 'minor'});
     bumpS.once('data', function(newFile){
       should.exist(newFile);

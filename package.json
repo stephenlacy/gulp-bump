@@ -1,7 +1,7 @@
 {
   "name": "gulp-bump",
   "description": "Bump npm versions with Gulp (gulpjs.com)",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "homepage": "http://github.com/stevelacy/gulp-bump",
   "repository": "git://github.com/stevelacy/gulp-bump.git",
   "author": "Steve Lacy me@slacy.me (slacy.me)",
@@ -25,7 +25,6 @@
    "keywords": [
     "gulp",
     "bump",
-    "node.js",
     "gulpplugin",
     "gulp-plugin"
   ],

@@ -8,7 +8,7 @@ module.exports = function(opts) {
   function modifyContents(file, cb) {
     // Remember that contents is ALWAYS a buffer
     if(file.isNull()) return cb(null, file);
-    if(file.isStream()) return cb(new Error('gulp-stylus: streams not supported'));
+    if(file.isStream()) return cb(new Error('gulp-bump: streams not supported'));
 
     var regex = /([\'|\"]?version[\'|\"]?[ ]*:[ ]*[\'|\"]?)([\d||A-a|.|-]*)([\'|\"]?)/i;
     var data = file.contents.toString();

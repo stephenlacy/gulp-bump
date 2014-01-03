@@ -1,14 +1,14 @@
 {
   "name": "gulp-bump",
   "description": "Bump npm versions with Gulp (gulpjs.com)",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "homepage": "http://github.com/stevelacy/gulp-bump",
   "repository": "git://github.com/stevelacy/gulp-bump.git",
   "author": "Steve Lacy me@slacy.me (slacy.me)",
   "main": "./index.js",
   "dependencies": {
     "semver": "~2.2.1",
-    "event-stream": "~3.0.20"
+    "map-stream": "~0.0.4"
   },
   "devDependencies": {
     "mocha": "*",

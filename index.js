@@ -1,4 +1,4 @@
-var es = require('event-stream');
+var map = require('map-stream');
 var semver = require('semver');
 
 module.exports = function(opts) {
@@ -22,5 +22,5 @@ module.exports = function(opts) {
   }
 
   // Return a stream
-  return es.map(modifyContents);
+  return map(modifyContents);
 };

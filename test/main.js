@@ -1,7 +1,5 @@
 var fs = require('fs');
 var gutil = require('gulp-util');
-var es = require('event-stream');
-var fs = require('fs');
 var should = require('should');
 var bump = require('../');
 

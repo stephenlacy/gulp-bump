@@ -8,8 +8,7 @@
   "main": "./index.js",
   "dependencies": {
     "semver":"*",
-    "gulp":"*",
-    "event-stream":"*"
+    "gulp":"*"
   },
   "devDependencies": {
     "mocha": "*",

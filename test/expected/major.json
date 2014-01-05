@@ -7,9 +7,7 @@
   "author": "Steve Lacy me@slacy.me (slacy.me)",
   "main": "./index.js",
   "dependencies": {
-    "semver":"*",
-    "gulp":"*",
-    "event-stream":"*"
+    "semver":"*"
   },
   "devDependencies": {
     "mocha": "*",

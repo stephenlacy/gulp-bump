@@ -44,11 +44,8 @@ gulp.task('bump', function(){
 // Defined method of updating:
 // Semantic
 gulp.task('bump', function(){
-  var options = {
-    bump: 'minor'
-  };
   gulp.src('./package.json')
-  .pipe(bump(options))
+  .pipe(bump({type:'minor'}))
   .pipe(gulp.dest('./'));
 });
 
@@ -63,10 +60,12 @@ gulp.task('default', function(){
 
 
 ## Options
-### options.bump
+### options.type
 What type of version to bump to. 
-Type: `String`
-Default: `patch`
+
+    Type: `String`
+    Default: `patch`
+    
 
 ###Versioning Used: [Semantic](http://semver.org/)
 ### String, lowercase

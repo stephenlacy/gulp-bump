@@ -32,7 +32,7 @@ describe('gulp-bump', function() {
       path: "test/package.json",
       contents: fs.readFileSync('test/package.json')
     });
-    var bumpS = bump({bump: 'major'});
+    var bumpS = bump({type: 'major'});
     bumpS.once('data', function(newFile){
       should.exist(newFile);
       should.exist(newFile.path);
@@ -49,7 +49,7 @@ describe('gulp-bump', function() {
       path: "test/package.json",
       contents: fs.readFileSync('test/package.json')
     });
-    var bumpS = bump({bump: 'minor'});
+    var bumpS = bump({type: 'minor'});
     bumpS.once('data', function(newFile){
       should.exist(newFile);
       should.exist(newFile.path);
@@ -68,7 +68,7 @@ describe('gulp-bump', function() {
       path: "test/package.json",
       contents: fs.readFileSync('test/package.json')
     });
-    var bumpS = bump({bump: 'invalid'});
+    var bumpS = bump({type: 'invalid'});
     bumpS.once('data', function(newFile){
       should.exist(newFile);
       should.exist(newFile.path);

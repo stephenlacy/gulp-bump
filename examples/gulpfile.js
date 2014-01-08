@@ -3,7 +3,7 @@ var bump = require('../');
 
 gulp.task('bump', function(){
   var options = {
-    bump: 'minor'
+    type: 'minor'
   };
   gulp.src('./package.json')
   .pipe(bump(options))

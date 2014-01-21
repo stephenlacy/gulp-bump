@@ -2,6 +2,8 @@
 [![Build Status](https://travis-ci.org/stevelacy/gulp-bump.png?branch=master)](https://travis-ci.org/stevelacy/gulp-bump)
 [![NPM version](https://badge.fury.io/js/gulp-bump.png)](http://badge.fury.io/js/gulp-bump)
 
+> Bump any json file which supports [semver](http://semver.org/) versioning
+
 ## Information
 
 <table>
@@ -10,7 +12,8 @@
 </tr>
 <tr>
 <td>Description</td>
-<td>Bump npm versions with Gulp (gulpjs.com)</td>
+<td>Bump any Semver version json file
+ with gulp (gulpjs.com)</td>
 </tr>
 <tr>
 <td>Node Version</td>
@@ -35,7 +38,7 @@ var bump = require('gulp-bump');
 // Basic usage:
 // Will patch the version
 gulp.task('bump', function(){
-  gulp.src('./package.json')
+  gulp.src('./component.json')
   .pipe(bump())
   .pipe(gulp.dest('./'));
 });
@@ -44,10 +47,27 @@ gulp.task('bump', function(){
 // Defined method of updating:
 // Semantic
 gulp.task('bump', function(){
-  gulp.src('./package.json')
+  gulp.src('./*.json')
   .pipe(bump({type:'minor'}))
   .pipe(gulp.dest('./'));
 });
+
+// Defined method of updating:
+// Semantic major
+gulp.task('bump', function(){
+  gulp.src('./bower.json')
+  .pipe(bump({type:'major'}))
+  .pipe(gulp.dest('./'));
+});
+
+// Update bower, component, npm at once:
+gulp.task('bump', function(){
+  gulp.src(['./bower.json', './component.json', './package.json'])
+  .pipe(bump({type:'major'}))
+  .pipe(gulp.dest('./'));
+});
+
+
 
 
 // Run the gulp tasks

@@ -25,6 +25,8 @@
 </tr>
 </table>
 
+If you are just requiring a bump for npm, consider using [npm version](https://npmjs.org/doc/cli/npm-version.html)
+
 ## Usage
 #### Install
     npm install gulp-bump --save

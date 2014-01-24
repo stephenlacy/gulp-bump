@@ -26,6 +26,9 @@
     "bump",
     "semver",
     "gulpplugin",
+    "version",
+    "versioning",
+    "gulp-version",
     "gulp-plugin"
   ],
   "licenses": [

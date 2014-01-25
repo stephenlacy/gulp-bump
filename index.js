@@ -11,7 +11,7 @@ module.exports = function(opts) {
     if(file.isStream()) return cb(new Error('gulp-bump: streams not supported'));
 
     var json = JSON.parse(file.contents.toString());
-    json.version = semver.inc(json.version, opts.type || 'patch');
+    json.version = opts.version || semver.inc(json.version, opts.type || 'patch');
     file.contents = new Buffer(JSON.stringify(json, null, 2) + '\n');
 
     cb(null, file);

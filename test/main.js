@@ -5,7 +5,6 @@ var bump = require('../');
 
 require('mocha');
 
-
 describe('gulp-bump', function() {
   it('should bump minor by default', function(done) {
     var fakeFile = new gutil.File({
@@ -42,6 +41,7 @@ describe('gulp-bump', function() {
     });
     bumpS.write(fakeFile);
   });
+
   it('should bump minor if options.bump = minor', function(done) {
     var fakeFile = new gutil.File({
       base: "test/",
@@ -59,7 +59,6 @@ describe('gulp-bump', function() {
     });
     bumpS.write(fakeFile);
   });
-
 
   it('should ignore and pass "patch" if options.bump is not Semantic', function(done) {
     var fakeFile = new gutil.File({
@@ -79,5 +78,21 @@ describe('gulp-bump', function() {
     bumpS.write(fakeFile);
   });
 
-
+  it('should set version to value specified by options.version', function (done) {
+    var fakeFile = new gutil.File({
+      base: "test/",
+      cwd: "test/",
+      path: "test/package.json",
+      contents: fs.readFileSync('test/package.json')
+    });
+    var bumpS = bump({version: '1.0.0'});
+    bumpS.once('data', function(newFile){
+      should.exist(newFile);
+      should.exist(newFile.path);
+      should.exist(newFile.contents);
+      String(newFile.contents).should.equal(fs.readFileSync('test/expected/version.json', 'utf8'));
+      done();
+    });
+    bumpS.write(fakeFile);
+  });
 });

@@ -10,14 +10,10 @@ module.exports = function(opts) {
     if(file.isNull()) return cb(null, file);
     if(file.isStream()) return cb(new Error('gulp-bump: streams not supported'));
 
-    var regex = /([\'|\"]?version[\'|\"]?[ ]*:[ ]*[\'|\"]?)([\d||A-a|.|-]*)([\'|\"]?)/i;
-    var data = file.contents.toString();
+    var json = JSON.parse(file.contents.toString());
+    json.version = semver.valid(opts.version) || semver.inc(json.version, opts.type || 'patch');
+    file.contents = new Buffer(JSON.stringify(json, null, 2) + '\n');
 
-    data = data.replace(regex, function(match, prefix, version, suffix){
-       var newVersion = semver.inc(version, opts.type || 'patch');
-       return prefix + newVersion + suffix;
-    });
-    file.contents = new Buffer(data);
     cb(null, file);
   }
 

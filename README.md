@@ -66,6 +66,16 @@ gulp.task('bump', function(){
   .pipe(gulp.dest('./'));
 });
 
+
+// Defined method of updating:
+// Set a specific version
+gulp.task('bump', function(){
+  gulp.src('./*.json')
+  .pipe(bump({version: '1.2.3'}))
+  .pipe(gulp.dest('./'));
+});
+
+
 // Update bower, component, npm at once:
 gulp.task('bump', function(){
   gulp.src(['./bower.json', './component.json', './package.json'])
@@ -91,7 +101,21 @@ What type of version to bump to.
 
     Type: `String`
     Default: `patch`
-    
+
+### options.version
+Set a specific version.
+
+    Type: `String`
+    Default: `none`
+
+Example:
+```javascript
+
+.pipe(bump({version: '1.2.3'}))
+.pipe(bump({version: '1.0.0-alpha'}))
+
+```    
+
 
 ###Versioning Used: [Semantic](http://semver.org/)
 ### String, lowercase

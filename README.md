@@ -83,6 +83,13 @@ gulp.task('bump', function(){
   .pipe(gulp.dest('./'));
 });
 
+// Define the tab size for indenting
+gulp.task('bump', function(){
+  gulp.src('./package.json')
+  .pipe(bump({type:'major', indent: 4 }))
+  .pipe(gulp.dest('./'));
+});
+
 
 
 

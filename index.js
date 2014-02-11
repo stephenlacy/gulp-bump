@@ -4,6 +4,7 @@ var semver = require('semver');
 module.exports = function(opts) {
   if(!opts) opts = {};
   if(!semver.inc('0.0.1', opts.type)) opts.type = false;
+  if(!opts.indent) opts.indent = 2;
   // Map each file to this function
   function modifyContents(file, cb) {
     // Remember that contents is ALWAYS a buffer
@@ -12,7 +13,7 @@ module.exports = function(opts) {
 
     var json = JSON.parse(file.contents.toString());
     json.version = semver.valid(opts.version) || semver.inc(json.version, opts.type || 'patch');
-    file.contents = new Buffer(JSON.stringify(json, null, 2) + '\n');
+    file.contents = new Buffer(JSON.stringify(json, null, opts.indent) + '\n');
 
     cb(null, file);
   }

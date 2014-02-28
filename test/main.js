@@ -10,8 +10,8 @@ describe('gulp-bump', function() {
     var fakeFile = new gutil.File({
       base: "test/",
       cwd: "test/",
-      path: "test/package.json",
-      contents: fs.readFileSync('test/package.json')
+      path: "test/fixtures/package.json",
+      contents: fs.readFileSync('test/fixtures/package.json')
     });
     var bumpS = bump();
     bumpS.once('data', function(newFile){
@@ -28,8 +28,8 @@ describe('gulp-bump', function() {
     var fakeFile = new gutil.File({
       base: "test/",
       cwd: "test/",
-      path: "test/package.json",
-      contents: fs.readFileSync('test/package.json')
+      path: "test/fixtures/package.json",
+      contents: fs.readFileSync('test/fixtures/package.json')
     });
     var bumpS = bump({type: 'major'});
     bumpS.once('data', function(newFile){
@@ -46,8 +46,8 @@ describe('gulp-bump', function() {
     var fakeFile = new gutil.File({
       base: "test/",
       cwd: "test/",
-      path: "test/package.json",
-      contents: fs.readFileSync('test/package.json')
+      path: "test/fixtures/package.json",
+      contents: fs.readFileSync('test/fixtures/package.json')
     });
     var bumpS = bump({type: 'minor'});
     bumpS.once('data', function(newFile){
@@ -64,8 +64,8 @@ describe('gulp-bump', function() {
     var fakeFile = new gutil.File({
       base: "test/",
       cwd: "test/",
-      path: "test/package.json",
-      contents: fs.readFileSync('test/package.json')
+      path: "test/fixtures/package.json",
+      contents: fs.readFileSync('test/fixtures/package.json')
     });
     var bumpS = bump({type: 'invalid'});
     bumpS.once('data', function(newFile){
@@ -82,8 +82,8 @@ describe('gulp-bump', function() {
     var fakeFile = new gutil.File({
       base: "test/",
       cwd: "test/",
-      path: "test/package.json",
-      contents: fs.readFileSync('test/package.json')
+      path: "test/fixtures/package.json",
+      contents: fs.readFileSync('test/fixtures/package.json')
     });
     var bumpS = bump({version: '1.0.0'});
     bumpS.once('data', function(newFile){
@@ -91,6 +91,24 @@ describe('gulp-bump', function() {
       should.exist(newFile.path);
       should.exist(newFile.contents);
       String(newFile.contents).should.equal(fs.readFileSync('test/expected/version.json', 'utf8'));
+      done();
+    });
+    bumpS.write(fakeFile);
+  });
+
+  it('should set the key to a custom version', function (done) {
+    var fakeFile = new gutil.File({
+      base: "test/",
+      cwd: "test/",
+      path: "test/fixtures/key.json",
+      contents: fs.readFileSync('test/fixtures/key.json')
+    });
+    var bumpS = bump({key: "appversion"});
+    bumpS.once('data', function(newFile){
+      should.exist(newFile);
+      should.exist(newFile.path);
+      should.exist(newFile.contents);
+      String(newFile.contents).should.equal(fs.readFileSync('test/expected/key.json', 'utf8'));
       done();
     });
     bumpS.write(fakeFile);

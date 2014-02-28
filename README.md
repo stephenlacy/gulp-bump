@@ -37,7 +37,7 @@ If you are just requiring a bump for npm, consider using [npm version](https://n
 
 ## Example
 
-```javascript
+```js
 var gulp = require('gulp');
 var bump = require('gulp-bump');
 
@@ -91,6 +91,13 @@ gulp.task('bump', function(){
   .pipe(gulp.dest('./'));
 });
 
+// Define the key for versioning off
+gulp.task('bump', function(){
+  gulp.src('./package.json')
+  .pipe(bump({key: "appversion"}))
+  .pipe(gulp.dest('./'));
+});
+
 
 
 
@@ -110,6 +117,23 @@ What type of version to bump to.
     Type: `String`
     Default: `patch`
 
+### options.key
+Set the versioning key
+
+    Type: `String`
+    Default: `version`
+
+Example:
+```js
+
+.pipe(bump({key: 'appversion'}))
+.pipe(bump({key: 'build-version'}))
+.pipe(bump({key: 'dev-version", type: 'major'}))
+
+```
+
+
+
 ### options.version
 Set a specific version.
 
@@ -117,7 +141,7 @@ Set a specific version.
     Default: `none`
 
 Example:
-```javascript
+```js
 
 .pipe(bump({version: '1.2.3'}))
 .pipe(bump({version: '1.0.0-alpha'}))

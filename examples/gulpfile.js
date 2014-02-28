@@ -7,10 +7,14 @@ gulp.task('bump', function(){
   };
   gulp.src('./package.json')
   .pipe(bump(options))
-  .pipe(gulp.dest('./'));
+  .pipe(gulp.dest('./build'));
+});
+
+gulp.task('key', function(){
+  gulp.src('./key.json')
+  .pipe(bump({key: "appversion"}))
+  .pipe(gulp.dest('./build'));
 });
 
 
-gulp.task('default', function(){
-  gulp.run('bump');
-});
+gulp.task('default', ['bump']);

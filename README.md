@@ -128,7 +128,7 @@ Example:
 
 .pipe(bump({key: 'appversion'}))
 .pipe(bump({key: 'build-version'}))
-.pipe(bump({key: 'dev-version", type: 'major'}))
+.pipe(bump({key: 'dev-version', type: 'major'}))
 
 ```
 

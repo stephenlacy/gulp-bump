@@ -1,3 +1,4 @@
+var gutil = require('gulp-util');
 var map = require('map-stream');
 var semver = require('semver');
 
@@ -15,7 +16,7 @@ module.exports = function(opts) {
     var json = JSON.parse(file.contents.toString());
     json[opts.key] = semver.valid(opts[opts.key]) || semver.inc(json[opts.key], opts.type || 'patch');
     file.contents = new Buffer(JSON.stringify(json, null, opts.indent) + '\n');
-
+    gutil.log('Bumped to version: '+gutil.colors.cyan(json[opts.key]));
     cb(null, file);
   }
 

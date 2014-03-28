@@ -8,12 +8,12 @@
   "main": "./index.js",
   "dependencies": {
     "map-stream": "~0.1.0",
-    "semver": "~2.2.1"
+    "semver": "~2.2.1",
+    "gulp-util": "~2.2.12"
   },
   "devDependencies": {
     "mocha": "*",
-    "should": "*",
-    "gulp-util": "~2.2.12"
+    "should": "*"
   },
   "scripts": {
     "test": "mocha --reporter spec"

@@ -10,6 +10,16 @@ module.exports = function(opts) {
 
   function modifyContents(file, cb) {
 
+    if(!opts.type){
+      var type = ['major', 'minor', 'patch'].filter(function(type){
+        return gutil.env[type];
+      });
+
+      if(type.length){
+        opts.type = type[0];
+      }
+    }
+
     if(file.isNull()) return cb(null, file);
     if(file.isStream()) return cb(new Error('gulp-bump: streams not supported'));
 

@@ -26,7 +26,7 @@ module.exports = function(opts) {
   var indent = opts.indent;
   var type = opts.type;
 
-  var json;
+  var content;
 
   return through.obj(function(file, enc, cb) {
     if (file.isNull()) {
@@ -35,32 +35,31 @@ module.exports = function(opts) {
     if (file.isStream()) {
       return cb(new gutil.PluginError('gulp-bump', 'Streaming not supported'));
     }
-    
+
     try {
-      json = JSON.parse(file.contents.toString());
+      content = JSON.parse(file.contents.toString());
     } catch (e) {
       return cb(new gutil.PluginError('gulp-bump', 'Problem parsing JSON file ' + file.path));
     }
 
     // just set a version to the key
     if (version) {
-      if (!json[key]) {
+      if (!content[key]) {
         // log to user that key didn't exist before
         gutil.log('Creating key', gutil.colors.red(key), 'with version:', gutil.colors.cyan(version));
       }
-      json[key] = version;
+      content[key] = version;
     }
-    else if (semver.valid(json[key])) {
+    else if (semver.valid(content[key])) {
     // increment the key with type
-      json[key] = semver.inc(json[key], type);
+      content[key] = semver.inc(content[key], type);
     }
     else {
       return cb(new gutil.PluginError('gulp-bump', 'Detected invalid semver ' + key + ' in file ' + file.path));
     }
+    file.contents = new Buffer(JSON.stringify(content, null, indent) + '\n');
 
-    file.contents = new Buffer(JSON.stringify(json, null, indent) + '\n');
-    
-    gutil.log('Bumped ' + gutil.colors.magenta(key) + ' to: ' + gutil.colors.cyan(json[key]));
+    gutil.log('Bumped ' + gutil.colors.magenta(key) + ' to: ' + gutil.colors.cyan(content[key]));
     cb(null, file);
   });
 };

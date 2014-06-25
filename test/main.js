@@ -191,9 +191,9 @@ describe('gulp-bump', function() {
 
     it('should bump minor by default', function(done) {
       var fakeFile = new gutil.File({
-        base: "test/",
-        cwd: "test/",
-        path: "test/fixtures/package.json",
+        base: 'test/',
+        cwd: 'test/',
+        path: 'test/fixtures/package.json',
         contents: fixtureFile
       });
 
@@ -211,9 +211,9 @@ describe('gulp-bump', function() {
 
     it('should bump major if options.bump = major', function(done) {
       var fakeFile = new gutil.File({
-        base: "test/",
-        cwd: "test/",
-        path: "test/fixtures/package.json",
+        base: 'test/',
+        cwd: 'test/',
+        path: 'test/fixtures/package.json',
         contents: fixtureFile
       });
 
@@ -231,9 +231,9 @@ describe('gulp-bump', function() {
 
     it('should bump minor if options.bump = minor', function(done) {
       var fakeFile = new gutil.File({
-        base: "test/",
-        cwd: "test/",
-        path: "test/fixtures/package.json",
+        base: 'test/',
+        cwd: 'test/',
+        path: 'test/fixtures/package.json',
         contents: fixtureFile
       });
 
@@ -251,9 +251,9 @@ describe('gulp-bump', function() {
 
     it('should set version to value specified by options.version', function(done) {
       var fakeFile = new gutil.File({
-        base: "test/",
-        cwd: "test/",
-        path: "test/fixtures/package.json",
+        base: 'test/',
+        cwd: 'test/',
+        path: 'test/fixtures/package.json',
         contents: fixtureFile
       });
 
@@ -271,13 +271,13 @@ describe('gulp-bump', function() {
 
     it('should set the key to a custom version', function(done) {
       var fakeFile = new gutil.File({
-        base: "test/",
-        cwd: "test/",
-        path: "test/fixtures/key.json",
+        base: 'test/',
+        cwd: 'test/',
+        path: 'test/fixtures/key.json',
         contents: fs.readFileSync('test/fixtures/key.json')
       });
 
-      var bumpS = bump({key: "appversion"});
+      var bumpS = bump({key: 'appversion'});
 
       bumpS.once('data', function(newFile) {
         should.exist(newFile);
@@ -297,9 +297,9 @@ describe('gulp-bump', function() {
 
     var createFile = function (tabType) {
       return new gutil.File({
-        base: "test/",
-        cwd: "test/",
-        path: "test/fixtures/package.json",
+        base: 'test/',
+        cwd: 'test/',
+        path: 'test/fixtures/package.json',
         contents: new Buffer(JSON.stringify(fixtureObj, null, tabType))
       });
     };
@@ -339,9 +339,9 @@ describe('gulp-bump', function() {
 
     it('should preserve whitespace at end', function (done) {
       var fakeFile = new gutil.File({
-        base: "test/",
-        cwd: "test/",
-        path: "test/fixtures/package.json",
+        base: 'test/',
+        cwd: 'test/',
+        path: 'test/fixtures/package.json',
         contents: new Buffer(JSON.stringify(fixtureObj, null, 2) +  '\n')
       });
       var bumpS = bump();
@@ -355,9 +355,9 @@ describe('gulp-bump', function() {
 
     it('should not add new line to file', function (done) {
       var fakeFile = new gutil.File({
-        base: "test/",
-        cwd: "test/",
-        path: "test/fixtures/package.json",
+        base: 'test/',
+        cwd: 'test/',
+        path: 'test/fixtures/package.json',
         contents: new Buffer(JSON.stringify(fixtureObj, null, 2))
       });
       var bumpS = bump();

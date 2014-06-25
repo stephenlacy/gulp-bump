@@ -30,19 +30,16 @@ module.exports = function(opts) {
 
   return through.obj(function(file, enc, cb) {
     if (file.isNull()) {
-      this.push(file);
-      return cb();
+      return cb(null, file);
     }
     if (file.isStream()) {
-      this.emit('error', new gutil.PluginError('gulp-bump', 'Streaming not supported'));
-      return cb();
+      return cb(new gutil.PluginError('gulp-bump', 'Streaming not supported'));
     }
     
     try {
       json = JSON.parse(file.contents.toString());
     } catch (e) {
-      this.emit('error', new gutil.PluginError('gulp-bump', 'Problem parsing JSON file ' + file.path));
-      return cb();
+      return cb(new gutil.PluginError('gulp-bump', 'Problem parsing JSON file ' + file.path));
     }
 
     // just set a version to the key
@@ -58,14 +55,12 @@ module.exports = function(opts) {
       json[key] = semver.inc(json[key], type);
     }
     else {
-      this.emit('error', new gutil.PluginError('gulp-bump', 'Detected invalid semver ' + key + ' in file ' + file.path));
-      return cb();
+      return cb(new gutil.PluginError('gulp-bump', 'Detected invalid semver ' + key + ' in file ' + file.path));
     }
 
     file.contents = new Buffer(JSON.stringify(json, null, indent) + '\n');
     
     gutil.log('Bumped ' + gutil.colors.magenta(key) + ' to: ' + gutil.colors.cyan(json[key]));
-    this.push(file);
-    return cb();
+    cb(null, file);
   });
 };

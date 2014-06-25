@@ -5,7 +5,7 @@ var semver = require('semver');
 var setDefaultOptions = function(opts) {
   opts = opts || {};
   opts.key = opts.key || 'version';
-  opts.indent = opts.indent || 2;
+  opts.indent = opts.indent || void 0;
   // default type bump is patch
   if (!opts.type || !semver.inc('0.0.1', opts.type)) {
     opts.type = 'patch';
@@ -18,6 +18,18 @@ var setDefaultOptions = function(opts) {
   return opts;
 };
 
+// Preserver new line at the end of a file
+var possibleNewline = function (json) {
+  var lastChar = (json.slice(-1) === '\n') ? '\n' : '';
+  return lastChar;
+}
+
+// Figured out which "space" params to be used for JSON.stringfiy.
+var space = function space(json) {
+    var match = json.match(/^(?:(\t+)|( +))"/m);
+    return match ? (match[1] ? '\t' : match[2].length) : ''
+}
+
 module.exports = function(opts) {
   // set task options
   opts = setDefaultOptions(opts);
@@ -26,7 +38,7 @@ module.exports = function(opts) {
   var indent = opts.indent;
   var type = opts.type;
 
-  var content;
+  var content, json;
 
   return through.obj(function(file, enc, cb) {
     if (file.isNull()) {
@@ -36,8 +48,9 @@ module.exports = function(opts) {
       return cb(new gutil.PluginError('gulp-bump', 'Streaming not supported'));
     }
 
+    json = file.contents.toString();
     try {
-      content = JSON.parse(file.contents.toString());
+      content = JSON.parse(json);
     } catch (e) {
       return cb(new gutil.PluginError('gulp-bump', 'Problem parsing JSON file ' + file.path));
     }
@@ -57,7 +70,7 @@ module.exports = function(opts) {
     else {
       return cb(new gutil.PluginError('gulp-bump', 'Detected invalid semver ' + key + ' in file ' + file.path));
     }
-    file.contents = new Buffer(JSON.stringify(content, null, indent) + '\n');
+    file.contents = new Buffer(JSON.stringify(content, null, indent || space(json)) + possibleNewline(json));
 
     gutil.log('Bumped ' + gutil.colors.magenta(key) + ' to: ' + gutil.colors.cyan(content[key]));
     cb(null, file);

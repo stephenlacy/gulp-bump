@@ -5,7 +5,7 @@ var semver = require('semver');
 var setDefaultOptions = function(opts) {
   opts = opts || {};
   opts.key = opts.key || 'version';
-  opts.indent = opts.indent || 2;
+  opts.indent = opts.indent || void 0;
   // default type bump is patch
   if (!opts.type || !semver.inc('0.0.1', opts.type)) {
     opts.type = 'patch';
@@ -18,6 +18,18 @@ var setDefaultOptions = function(opts) {
   return opts;
 };
 
+// Preserver new line at the end of a file
+var possibleNewline = function (json) {
+  var lastChar = (json.slice(-1) === '\n') ? '\n' : '';
+  return lastChar;
+}
+
+// Figured out which "space" params to be used for JSON.stringfiy.
+var space = function space(json) {
+    var match = json.match(/^(?:(\t+)|( +))"/m);
+    return match ? (match[1] ? '\t' : match[2].length) : ''
+}
+
 module.exports = function(opts) {
   // set task options
   opts = setDefaultOptions(opts);
@@ -26,7 +38,7 @@ module.exports = function(opts) {
   var indent = opts.indent;
   var type = opts.type;
 
-  var json;
+  var content, json;
 
   return through.obj(function(file, enc, cb) {
     if (file.isNull()) {
@@ -35,32 +47,32 @@ module.exports = function(opts) {
     if (file.isStream()) {
       return cb(new gutil.PluginError('gulp-bump', 'Streaming not supported'));
     }
-    
+
+    json = file.contents.toString();
     try {
-      json = JSON.parse(file.contents.toString());
+      content = JSON.parse(json);
     } catch (e) {
       return cb(new gutil.PluginError('gulp-bump', 'Problem parsing JSON file ' + file.path));
     }
 
     // just set a version to the key
     if (version) {
-      if (!json[key]) {
+      if (!content[key]) {
         // log to user that key didn't exist before
         gutil.log('Creating key', gutil.colors.red(key), 'with version:', gutil.colors.cyan(version));
       }
-      json[key] = version;
+      content[key] = version;
     }
-    else if (semver.valid(json[key])) {
+    else if (semver.valid(content[key])) {
     // increment the key with type
-      json[key] = semver.inc(json[key], type);
+      content[key] = semver.inc(content[key], type);
     }
     else {
       return cb(new gutil.PluginError('gulp-bump', 'Detected invalid semver ' + key + ' in file ' + file.path));
     }
+    file.contents = new Buffer(JSON.stringify(content, null, indent || space(json)) + possibleNewline(json));
 
-    file.contents = new Buffer(JSON.stringify(json, null, indent) + '\n');
-    
-    gutil.log('Bumped ' + gutil.colors.magenta(key) + ' to: ' + gutil.colors.cyan(json[key]));
+    gutil.log('Bumped ' + gutil.colors.magenta(key) + ' to: ' + gutil.colors.cyan(content[key]));
     cb(null, file);
   });
 };

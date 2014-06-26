@@ -7,7 +7,7 @@
 ## Information
 
 <table>
-<tr> 
+<tr>
 <td>Package</td><td>gulp-bump</td>
 </tr>
 <tr>
@@ -80,7 +80,8 @@ gulp.task('bump', function(){
   .pipe(gulp.dest('./'));
 });
 
-// Define the tab size for indenting
+// Override the tab size for indenting
+// (or simply omit to keep the current formatting)
 gulp.task('bump', function(){
   gulp.src('./package.json')
   .pipe(bump({type:'major', indent: 4 }))
@@ -183,7 +184,7 @@ Example:
 Set the amount of spaces for indentation in the result JSON file.
 
     Type: `Number`
-    Default: `2`
+    Default: Same as original source file
 
 
 ## Versioning

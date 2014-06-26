@@ -22,13 +22,13 @@ var setDefaultOptions = function(opts) {
 var possibleNewline = function (json) {
   var lastChar = (json.slice(-1) === '\n') ? '\n' : '';
   return lastChar;
-}
+};
 
 // Figured out which "space" params to be used for JSON.stringfiy.
 var space = function space(json) {
-    var match = json.match(/^(?:(\t+)|( +))"/m);
-    return match ? (match[1] ? '\t' : match[2].length) : ''
-}
+  var match = json.match(/^(?:(\t+)|( +))"/m);
+  return match ? (match[1] ? '\t' : match[2].length) : '';
+};
 
 module.exports = function(opts) {
   // set task options

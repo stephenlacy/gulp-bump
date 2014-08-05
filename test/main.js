@@ -128,8 +128,8 @@ describe('gulp-bump', function() {
 
       bumpS.on('error', function(e) {
         should.exist(e);
-        e.name.should.equal('Error');
-        e.message.should.containEql('Detected invalid semver version in file ' + file);
+        e.message.should.equal('Detected invalid semver version');
+        e.fileName.should.containEql(file);
         return done();
       });
       bumpS.write(fakeFile);
@@ -137,16 +137,18 @@ describe('gulp-bump', function() {
     });
 
     it('should fail when not detect a valid semver version and wrong key', function(done) {
+      var file = 'some-dir/dummyfile.js';
       var fakeFile = new gutil.File({
-       contents: new Buffer('{ "version": "0.0.1" }')
+        path: file,
+        contents: new Buffer('{ "version": "0.0.1" }')
       });
 
       var bumpS = bump({key: 'appversion'});
 
       bumpS.on('error', function(e) {
         should.exist(e);
-        e.name.should.equal('Error');
-        e.message.should.containEql('Detected invalid semver appversion in file');
+        e.message.should.containEql('Detected invalid semver appversion');
+        e.fileName.should.containEql(file);
         return done();
       });
       bumpS.write(fakeFile);
@@ -154,7 +156,9 @@ describe('gulp-bump', function() {
     });
 
     it('should fail when supplied with an invalid JSON', function(done) {
+      var file = 'some-dir/dummyfile.js';
       var fakeFile = new gutil.File({
+        path: file,
         contents: new Buffer('{ invalid json oh no!!!}')
       });
 
@@ -164,6 +168,7 @@ describe('gulp-bump', function() {
         should.exist(e);
         e.name.should.equal('Error');
         e.message.should.containEql('Problem parsing JSON file');
+        e.fileName.should.containEql(file);
         return done();
       });
       bumpS.write(fakeFile);

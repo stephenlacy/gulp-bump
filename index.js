@@ -52,7 +52,7 @@ module.exports = function(opts) {
     try {
       content = JSON.parse(json);
     } catch (e) {
-      return cb(new gutil.PluginError('gulp-bump', 'Problem parsing JSON file ' + file.path));
+      return cb(new gutil.PluginError('gulp-bump', 'Problem parsing JSON file', {fileName: file.path, showStack: true}));
     }
 
     // just set a version to the key
@@ -68,7 +68,7 @@ module.exports = function(opts) {
       content[key] = semver.inc(content[key], type);
     }
     else {
-      return cb(new gutil.PluginError('gulp-bump', 'Detected invalid semver ' + key + ' in file ' + file.path));
+      return cb(new gutil.PluginError('gulp-bump', 'Detected invalid semver ' + key, {fileName: file.path, showStack: false}));
     }
     file.contents = new Buffer(JSON.stringify(content, null, indent || space(json)) + possibleNewline(json));
 

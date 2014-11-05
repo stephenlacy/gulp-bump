@@ -1,14 +1,14 @@
 {
   "name": "gulp-bump",
   "description": "Bump npm versions with Gulp (gulpjs.com)",
-  "version": "0.1.11",
+  "version": "0.1.12",
   "homepage": "http://github.com/stevelacy/gulp-bump",
   "repository": "git://github.com/stevelacy/gulp-bump.git",
   "author": "Steve Lacy <me@slacy.me> (http://slacy.me)",
   "main": "./index.js",
   "dependencies": {
-    "gulp-util": "^3.0.0",
-    "semver": "^2.2.1",
+    "gulp-util": "^3.0.1",
+    "semver": "^2.3.2",
     "through2": "^0.5.1"
   },
   "devDependencies": {

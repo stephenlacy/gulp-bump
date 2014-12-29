@@ -209,7 +209,7 @@ Set the amount of spaces for indentation in the result JSON file.
 
 (MIT License)
 
-Copyright (c) 2014 Steve Lacy <me@slacy.me> slacy.me
+Copyright (c) 2015 Steve Lacy <me@slacy.me> slacy.me
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the

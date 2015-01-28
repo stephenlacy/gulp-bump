@@ -27,7 +27,7 @@
 
 ## Usage
 
-If you are just requiring a bump for npm, consider using [npm version](https://npmjs.org/doc/cli/npm-version.html)
+If you are just requiring a bump for npm, consider using [npm version](https://docs.npmjs.com/cli/version)
 
 #### Install
 

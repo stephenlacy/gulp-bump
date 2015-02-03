@@ -7,9 +7,9 @@
   "author": "Steve Lacy <me@slacy.me> (http://slacy.me)",
   "main": "./index.js",
   "dependencies": {
-    "gulp-util": "^3.0.1",
-    "semver": "^2.3.2",
-    "through2": "^0.5.1"
+    "gulp-util": "^3.0.3",
+    "semver": "^4.2.0",
+    "through2": "^0.6.3"
   },
   "devDependencies": {
     "mocha": "*",

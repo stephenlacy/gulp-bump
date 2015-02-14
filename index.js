@@ -1,15 +1,20 @@
-var gutil = require('gulp-util');
-var through = require('through2');
-var semver = require('semver');
+var gutil      = require('gulp-util');
+var through    = require('through2');
+var semver     = require('semver');
+var argv       = require('minimist')(process.argv);
+
 
 var setDefaultOptions = function(opts) {
-  opts = opts || {};
-  opts.key = opts.key || 'version';
-  opts.indent = opts.indent || void 0;
+  opts         = opts || {};
+  opts.key     = opts.key || 'version';
+  opts.indent  = opts.indent || void 0;
+  opts.version = (opts.version || argv['version']);
+
   // default type bump is patch
   if (!opts.type || !semver.inc('0.0.1', opts.type)) {
-    opts.type = 'patch';
+    opts.type = argv['type'] || 'patch';
   }
+
   // if passed specific version - validate it
   if (opts.version && !semver.valid(opts.version, opts.type)) {
     gutil.log('invalid version used as option', gutil.colors.red(opts.version));

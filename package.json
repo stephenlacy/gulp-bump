@@ -8,6 +8,7 @@
   "main": "./index.js",
   "dependencies": {
     "gulp-util": "^3.0.1",
+    "minimist": "^1.1.0",
     "semver": "^2.3.2",
     "through2": "^0.5.1"
   },

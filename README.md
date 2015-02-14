@@ -136,6 +136,20 @@ gulp.task('default', function(){
 });
 ```
 
+#### Bumping version manually or specific type via command line
+
+In command line when calling gulp task you can specify specific version to bump to, like so:
+
+```js
+  gulp bump --version 0.0.1
+```
+
+or to have gulp-bump handle the versioning but of a specific type:
+
+```js
+  gulp bump --type [minor|major|patch|prerelease]
+```
+
 ####You can view more examples in the [example folder.](https://github.com/stevelacy/gulp-bump/tree/master/examples)
 
 ## Options

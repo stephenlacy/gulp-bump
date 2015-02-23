@@ -166,6 +166,20 @@ Example:
 .pipe(bump({key: 'build-version'}))
 .pipe(bump({key: 'dev-version', type: 'major'}))
 ```
+##### Dot notation is supported for nested versions:
+
+```js
+
+.pipe(bump({key: {'sublevel.version'}}))
+
+/*
+{
+  "sublevel": {
+    "version": "<semver>"
+  }
+}
+*/
+```
 
 ### options.version
 Set a specific version to bump to.

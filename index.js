@@ -1,6 +1,7 @@
 var gutil = require('gulp-util');
 var through = require('through2');
 var semver = require('semver');
+var Dot = require('dot-object');
 
 var setDefaultOptions = function(opts) {
   opts = opts || {};
@@ -38,7 +39,7 @@ module.exports = function(opts) {
   var indent = opts.indent;
   var type = opts.type;
 
-  var content, json;
+  var content, json, ver;
 
   return through.obj(function(file, enc, cb) {
     if (file.isNull()) {
@@ -62,17 +63,25 @@ module.exports = function(opts) {
         gutil.log('Creating key', gutil.colors.red(key), 'with version:', gutil.colors.cyan(version));
       }
       content[key] = version;
+      ver = content[key];
     }
     else if (semver.valid(content[key])) {
     // increment the key with type
       content[key] = semver.inc(content[key], type);
+      ver = content[key];
+    }
+    else if (key.indexOf('.') > -1) {
+      var dot = new Dot();
+      var value = dot.pick(key, content);
+      ver = semver.inc(value, type);
+      dot.str(key, ver, content);
     }
     else {
       return cb(new gutil.PluginError('gulp-bump', 'Detected invalid semver ' + key, {fileName: file.path, showStack: false}));
     }
     file.contents = new Buffer(JSON.stringify(content, null, indent || space(json)) + possibleNewline(json));
 
-    gutil.log('Bumped ' + gutil.colors.magenta(key) + ' to: ' + gutil.colors.cyan(content[key]));
+    gutil.log('Bumped ' + gutil.colors.magenta(key) + ' to: ' + gutil.colors.cyan(ver));
     cb(null, file);
   });
 };

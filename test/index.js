@@ -1,3 +1,5 @@
+'use strict';
+
 var gutil = require('gulp-util');
 var should = require('should');
 var bump = require('..');
@@ -8,7 +10,8 @@ describe('gulp-bump: JSON comparison fixtures', function() {
 
   it('should bump patch version by default', function(done) {
     var fakeFile = new gutil.File({
-      contents: new Buffer('{ "version": "0.0.9" }')
+      contents: new Buffer('{ "version": "0.0.9" }'),
+      path: 'test/fixtures/test.json'
     });
 
     var bumpS = bump();
@@ -25,7 +28,8 @@ describe('gulp-bump: JSON comparison fixtures', function() {
 
   it('should bump patch version as default and a key=appversion', function(done) {
     var fakeFile = new gutil.File({
-      contents: new Buffer('{ "appversion": "0.0.1" }')
+      contents: new Buffer('{ "appversion": "0.0.1" }'),
+      path: 'test/fixtures/test.json'
     });
 
     var bumpS = bump({key: 'appversion'});
@@ -42,7 +46,8 @@ describe('gulp-bump: JSON comparison fixtures', function() {
 
   it('should ignore invalid type and use type=patch', function(done) {
     var fakeFile = new gutil.File({
-      contents: new Buffer('{ "version": "0.0.1" }')
+      contents: new Buffer('{ "version": "0.0.1" }'),
+      path: 'test/fixtures/test.json'
     });
 
     var bumpS = bump({type: 'invalidType'});
@@ -60,7 +65,8 @@ describe('gulp-bump: JSON comparison fixtures', function() {
 
   it('should set the correct version when supplied', function(done) {
     var fakeFile = new gutil.File({
-      contents: new Buffer('{ "version": "0.0.1" }')
+      contents: new Buffer('{ "version": "0.0.1" }'),
+      path: 'test/fixtures/test.json'
     });
 
     var bumpS = bump({version: '0.0.2'});
@@ -77,7 +83,8 @@ describe('gulp-bump: JSON comparison fixtures', function() {
 
   it('should set the correct version when supplied even if key did not exist', function(done) {
     var fakeFile = new gutil.File({
-      contents: new Buffer('{}')
+      contents: new Buffer('{}'),
+      path: 'test/fixtures/test.json'
     });
 
     var bumpS = bump({version: '0.0.2'});
@@ -94,7 +101,8 @@ describe('gulp-bump: JSON comparison fixtures', function() {
 
   it('should bump prerelease version', function(done) {
     var fakeFile = new gutil.File({
-      contents: new Buffer('{ "version": "0.0.1-0"}')
+      contents: new Buffer('{ "version": "0.0.1-0"}'),
+      path: 'test/fixtures/test.json'
     });
 
     var bumpS = bump({type: 'prerelease'});

@@ -1,3 +1,6 @@
+'use strict';
+
+var path = require('path');
 var gutil = require('gulp-util');
 var through = require('through2');
 var semver = require('semver');
@@ -81,7 +84,7 @@ module.exports = function(opts) {
     }
     file.contents = new Buffer(JSON.stringify(content, null, indent || space(json)) + possibleNewline(json));
 
-    gutil.log('Bumped ' + gutil.colors.magenta(key) + ' to: ' + gutil.colors.cyan(ver));
+    gutil.log('Bumped \'' + gutil.colors.cyan(path.basename(file.path)) + '\' ' + gutil.colors.magenta(key) + ' to: ' + gutil.colors.cyan(ver));
     cb(null, file);
   });
 };

@@ -13,7 +13,7 @@ describe('gulp-bump', function() {
 
     it('should bump patch version by default', function(done) {
       var fakeFile = new gutil.File({
-        contents: new Buffer('{ "version": "0.0.1" }')
+        contents: new Buffer('{ "version": "0.0.9" }')
       });
 
       var bumpS = bump();
@@ -21,7 +21,7 @@ describe('gulp-bump', function() {
       bumpS.once('data', function(newFile) {
         should.exist(newFile);
         should.exist(newFile.contents);
-        JSON.parse(newFile.contents.toString()).version.should.equal('0.0.2');
+        JSON.parse(newFile.contents.toString()).version.should.equal('0.0.10');
         return done();
       });
       bumpS.write(fakeFile);

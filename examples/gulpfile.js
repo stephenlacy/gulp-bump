@@ -16,5 +16,11 @@ gulp.task('key', function(){
   .pipe(gulp.dest('./build'));
 });
 
+gulp.task('patch', function(){
+  gulp.src('./package.json')
+  .pipe(bump())
+  .pipe(gulp.dest('./build'));
+});
+
 
 gulp.task('default', ['bump']);

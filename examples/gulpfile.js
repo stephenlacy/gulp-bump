@@ -22,5 +22,11 @@ gulp.task('patch', function(){
   .pipe(gulp.dest('./build'));
 });
 
+gulp.task('sublevel', function(){
+  gulp.src('./sublevel.json')
+  .pipe(bump({key: 'subversion.version'}))
+  .pipe(gulp.dest('./build'));
+});
+
 
 gulp.task('default', ['bump']);

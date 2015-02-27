@@ -72,7 +72,7 @@ module.exports = function(opts) {
     else if (opts.key.indexOf('.') > -1) {
       var dot = new Dot();
       var value = dot.pick(opts.key, content);
-      ver = semver.inc(opts.value, opts.type);
+      ver = semver.inc(value, opts.type);
       dot.str(opts.key, ver, content);
     }
     else {

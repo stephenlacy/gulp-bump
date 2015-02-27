@@ -6,34 +6,6 @@ var through = require('through2');
 var semver = require('semver');
 var Dot = require('dot-object');
 
-var setDefaultOptions = function(opts) {
-  opts = opts || {};
-  opts.key = opts.key || 'version';
-  opts.indent = opts.indent || void 0;
-  // default type bump is patch
-  if (!opts.type || !semver.inc('0.0.1', opts.type)) {
-    opts.type = 'patch';
-  }
-  // if passed specific version - validate it
-  if (opts.version && !semver.valid(opts.version, opts.type)) {
-    gutil.log('invalid version used as option', gutil.colors.red(opts.version));
-    opts.version = null;
-  }
-  return opts;
-};
-
-// Preserver new line at the end of a file
-var possibleNewline = function (json) {
-  var lastChar = (json.slice(-1) === '\n') ? '\n' : '';
-  return lastChar;
-};
-
-// Figured out which "space" params to be used for JSON.stringfiy.
-var space = function space(json) {
-  var match = json.match(/^(?:(\t+)|( +))"/m);
-  return match ? (match[1] ? '\t' : match[2].length) : '';
-};
-
 module.exports = function(opts) {
   // set task options
   opts = setDefaultOptions(opts);
@@ -84,3 +56,31 @@ module.exports = function(opts) {
     cb(null, file);
   });
 };
+
+function setDefaultOptions(opts) {
+  opts = opts || {};
+  opts.key = opts.key || 'version';
+  opts.indent = opts.indent || void 0;
+  // default type bump is patch
+  if (!opts.type || !semver.inc('0.0.1', opts.type)) {
+    opts.type = 'patch';
+  }
+  // if passed specific version - validate it
+  if (opts.version && !semver.valid(opts.version, opts.type)) {
+    gutil.log('invalid version used as option', gutil.colors.red(opts.version));
+    opts.version = null;
+  }
+  return opts;
+}
+
+// Preserver new line at the end of a file
+function possibleNewline(json) {
+  var lastChar = (json.slice(-1) === '\n') ? '\n' : '';
+  return lastChar;
+}
+
+// Figured out which "space" params to be used for JSON.stringfiy.
+function space(json) {
+  var match = json.match(/^(?:(\t+)|( +))"/m);
+  return match ? (match[1] ? '\t' : match[2].length) : '';
+}

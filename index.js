@@ -37,10 +37,6 @@ var space = function space(json) {
 module.exports = function(opts) {
   // set task options
   opts = setDefaultOptions(opts);
-  var key = opts.key;
-  var version = opts.version;
-  var indent = opts.indent;
-  var type = opts.type;
 
   var content, json, ver;
 
@@ -60,31 +56,31 @@ module.exports = function(opts) {
     }
 
     // just set a version to the key
-    if (version) {
-      if (!content[key]) {
+    if (opts.version) {
+      if (!content[opts.key]) {
         // log to user that key didn't exist before
-        gutil.log('Creating key', gutil.colors.red(key), 'with version:', gutil.colors.cyan(version));
+        gutil.log('Creating key', gutil.colors.red(opts.key), 'with version:', gutil.colors.cyan(opts.version));
       }
-      content[key] = version;
-      ver = content[key];
+      content[opts.key] = opts.version;
+      ver = content[opts.key];
     }
-    else if (semver.valid(content[key])) {
+    else if (semver.valid(content[opts.key])) {
     // increment the key with type
-      content[key] = semver.inc(content[key], type);
-      ver = content[key];
+      content[opts.key] = semver.inc(content[opts.key], opts.type);
+      ver = content[opts.key];
     }
-    else if (key.indexOf('.') > -1) {
+    else if (opts.key.indexOf('.') > -1) {
       var dot = new Dot();
-      var value = dot.pick(key, content);
-      ver = semver.inc(value, type);
-      dot.str(key, ver, content);
+      var value = dot.pick(opts.key, content);
+      ver = semver.inc(value, opts.type);
+      dot.str(opts.key, ver, content);
     }
     else {
-      return cb(new gutil.PluginError('gulp-bump', 'Detected invalid semver ' + key, {fileName: file.path, showStack: false}));
+      return cb(new gutil.PluginError('gulp-bump', 'Detected invalid semver ' + opts.key, {fileName: file.path, showStack: false}));
     }
-    file.contents = new Buffer(JSON.stringify(content, null, indent || space(json)) + possibleNewline(json));
+    file.contents = new Buffer(JSON.stringify(content, null, opts.indent || space(json)) + possibleNewline(json));
 
-    gutil.log('Bumped \'' + gutil.colors.cyan(path.basename(file.path)) + '\' ' + gutil.colors.magenta(key) + ' to: ' + gutil.colors.cyan(ver));
+    gutil.log('Bumped \'' + gutil.colors.cyan(path.basename(file.path)) + '\' ' + gutil.colors.magenta(opts.key) + ' to: ' + gutil.colors.cyan(ver));
     cb(null, file);
   });
 };

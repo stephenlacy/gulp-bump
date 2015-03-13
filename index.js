@@ -38,7 +38,7 @@ module.exports = function(opts) {
     }
     else if (semver.valid(content[opts.key])) {
     // increment the key with type
-      content[opts.key] = semver.inc(content[opts.key], opts.type);
+      content[opts.key] = semver.inc(content[opts.key], opts.type, opts.preid);
       ver = content[opts.key];
     }
     else if (opts.key.indexOf('.') > -1) {

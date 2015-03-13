@@ -200,6 +200,18 @@ Set the amount of spaces for indentation in the result JSON file.
     Type: `Number`
     Default: Same as original source file
 
+### options.preid
+Set the prerelase tag to use
+
+    Type: `String`
+    Default: `null`
+
+Example:
+
+```js
+bump({type: 'prerelease', preid : 'alphaWhateverTheYWant'});
+ // => '0.0.2-alphaWhateverTheYWant.0'
+```
 
 ## Versioning
 #### Versioning Used: [Semantic](http://semver.org/)

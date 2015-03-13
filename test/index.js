@@ -116,4 +116,22 @@ describe('gulp-bump: JSON comparison fixtures', function() {
     bumpS.write(fakeFile);
     bumpS.end();
   });
+
+   it('should bump to a prerelease version with a preid', function(done) {
+    var fakeFile = new gutil.File({
+      contents: new Buffer('{ "version": "0.0.1"}'),
+      path: 'test/fixtures/test.json'
+    });
+
+    var bumpS = bump({type: 'prerelease', preid : 'alphaWhateverTheYWant'});
+
+    bumpS.once('data', function(newFile) {
+      should.exist(newFile);
+      should.exist(newFile.contents);
+      JSON.parse(newFile.contents.toString()).version.should.equal('0.0.2-alphaWhateverTheYWant.0');
+      return done();
+    });
+    bumpS.write(fakeFile);
+    bumpS.end();
+  });
 });

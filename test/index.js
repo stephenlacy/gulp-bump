@@ -116,4 +116,42 @@ describe('gulp-bump: JSON comparison fixtures', function() {
     bumpS.write(fakeFile);
     bumpS.end();
   });
+
+  it('should add and bump preid version', function(done) {
+    var fakeFile = new gutil.File({
+      contents: new Buffer('{ "version": "0.1.0"}'),
+      path: 'test/fixtures/test.json'
+    });
+
+    var bumpS = bump({type: 'prerelease', preid: 'beta'});
+
+    bumpS.once('data', function(newFile) {
+      should.exist(newFile);
+      should.exist(newFile.contents);
+      console.log(String(newFile.contents));
+      JSON.parse(newFile.contents.toString()).version.should.equal('0.1.1-beta.0');
+      return done();
+    });
+    bumpS.write(fakeFile);
+    bumpS.end();
+  });
+
+  it('should bump preid version', function(done) {
+    var fakeFile = new gutil.File({
+      contents: new Buffer('{ "version": "0.1.0-zeta.1"}'),
+      path: 'test/fixtures/test.json'
+    });
+
+    var bumpS = bump({type: 'prerelease', preid: 'zeta'});
+
+    bumpS.once('data', function(newFile) {
+      should.exist(newFile);
+      should.exist(newFile.contents);
+      console.log(String(newFile.contents));
+      JSON.parse(newFile.contents.toString()).version.should.equal('0.1.0-zeta.2');
+      return done();
+    });
+    bumpS.write(fakeFile);
+    bumpS.end();
+  });
 });

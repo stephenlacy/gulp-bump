@@ -32,10 +32,5 @@
     "gulp-version",
     "gulp-plugin"
   ],
-  "licenses": [
-    {
-      "type": "MIT",
-      "url": "http://github.com/stevelacy/gulp-bump/raw/master/LICENSE"
-    }
-  ]
+  "license": "MIT"
 }

@@ -1,7 +1,7 @@
 'use strict';
 
 var fs = require('fs');
-var gutil = require('gulp-util');
+var File = require('vinyl');
 var should = require('should');
 var bump = require('..');
 
@@ -12,7 +12,7 @@ var fixtureFile = fs.readFileSync('test/fixtures/package.json');
 describe('gulp-bump: JSON File fixtures', function() {
 
   it('should bump minor by default', function(done) {
-    var fakeFile = new gutil.File({
+    var fakeFile = new File({
       base: 'test/',
       cwd: 'test/',
       path: 'test/fixtures/package.json',
@@ -32,7 +32,7 @@ describe('gulp-bump: JSON File fixtures', function() {
   });
 
   it('should bump major if options.bump = major', function(done) {
-    var fakeFile = new gutil.File({
+    var fakeFile = new File({
       base: 'test/',
       cwd: 'test/',
       path: 'test/fixtures/package.json',
@@ -52,7 +52,7 @@ describe('gulp-bump: JSON File fixtures', function() {
   });
 
   it('should bump minor if options.bump = minor', function(done) {
-    var fakeFile = new gutil.File({
+    var fakeFile = new File({
       base: 'test/',
       cwd: 'test/',
       path: 'test/fixtures/package.json',
@@ -72,7 +72,7 @@ describe('gulp-bump: JSON File fixtures', function() {
   });
 
   it('should set version to value specified by options.version', function(done) {
-    var fakeFile = new gutil.File({
+    var fakeFile = new File({
       base: 'test/',
       cwd: 'test/',
       path: 'test/fixtures/package.json',
@@ -92,7 +92,7 @@ describe('gulp-bump: JSON File fixtures', function() {
   });
 
   it('should set the key to a custom version', function(done) {
-    var fakeFile = new gutil.File({
+    var fakeFile = new File({
       base: 'test/',
       cwd: 'test/',
       path: 'test/fixtures/key.json',

@@ -1,6 +1,6 @@
 'use strict';
 
-var gutil = require('gulp-util');
+var File = require('vinyl');
 var should = require('should');
 var bump = require('..');
 
@@ -12,7 +12,7 @@ describe('gulp-bump: Whitespace preserving', function() {
   var expectedObj = { version: '1.0.1' };
 
   var createFile = function (tabType) {
-    return new gutil.File({
+    return new File({
       base: 'test/',
       cwd: 'test/',
       path: 'test/fixtures/package.json',
@@ -54,7 +54,7 @@ describe('gulp-bump: Whitespace preserving', function() {
   });
 
   it('should preserve whitespace at end', function (done) {
-    var fakeFile = new gutil.File({
+    var fakeFile = new File({
       base: 'test/',
       cwd: 'test/',
       path: 'test/fixtures/package.json',
@@ -70,7 +70,7 @@ describe('gulp-bump: Whitespace preserving', function() {
   });
 
   it('should not add new line to file', function (done) {
-    var fakeFile = new gutil.File({
+    var fakeFile = new File({
       base: 'test/',
       cwd: 'test/',
       path: 'test/fixtures/package.json',

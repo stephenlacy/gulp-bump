@@ -1,7 +1,8 @@
 'use strict';
 
 var path = require('path');
-var gutil = require('gulp-util');
+var pluginError = require('plugin-error');
+var log = require('plugin-log');
 var through = require('through2');
 var semver = require('semver');
 var Dot = require('dot-object');
@@ -10,52 +11,77 @@ module.exports = function(opts) {
   // set task options
   opts = setDefaultOptions(opts);
 
-  var content, json, ver;
-
   return through.obj(function(file, enc, cb) {
+
     if (file.isNull()) {
       return cb(null, file);
     }
     if (file.isStream()) {
-      return cb(new gutil.PluginError('gulp-bump', 'Streaming not supported'));
+      return cb(new pluginError('gulp-bump', 'Streaming not supported'));
     }
 
-    json = file.contents.toString();
+    var content = String(file.contents);
+    var json;
+    var ver;
+    var dot;
+
     try {
-      content = JSON.parse(json);
+      json = JSON.parse(content);
     } catch (e) {
-      return cb(new gutil.PluginError('gulp-bump', 'Problem parsing JSON file', {fileName: file.path, showStack: true}));
+      return cb(new pluginError('gulp-bump', 'Problem parsing JSON file', {
+        fileName: file.path,
+        showStack: true
+      }));
     }
 
-    // just set a version to the key
-    if (opts.version) {
-      if (!content[opts.key]) {
-        // log to user that key didn't exist before
-        gutil.log('Creating key', gutil.colors.red(opts.key), 'with version:', gutil.colors.cyan(opts.version));
-      }
-      content[opts.key] = opts.version;
-      ver = content[opts.key];
-    }
-    else if (semver.valid(content[opts.key])) {
-    // increment the key with type
-      content[opts.key] = semver.inc(content[opts.key], opts.type, opts.preid);
-      ver = content[opts.key];
-    }
-    else if (opts.key.indexOf('.') > -1) {
-      var dot = new Dot();
-      var value = dot.pick(opts.key, content);
-      ver = semver.inc(value, opts.type);
-      dot.str(opts.key, ver, content);
+    // get the version and key
+    if (opts.key.indexOf('.') > -1) {
+      dot = new Dot();
+      opts.value = dot.pick(opts.key, json);
+      ver = bump(opts);
     }
     else {
-      return cb(new gutil.PluginError('gulp-bump', 'Detected invalid semver ' + opts.key, {fileName: file.path, showStack: false}));
+      opts.value = json[opts.key];
+      if (!semver.valid(opts.value) && !opts.version) {
+        return cb(new pluginError('gulp-bump', 'Detected invalid semver ' + opts.key, {
+          fileName: file.path,
+          showStack: false
+        }));
+      }
+      ver = bump(opts);
     }
-    file.contents = new Buffer(JSON.stringify(content, null, opts.indent || space(json)) + possibleNewline(json));
 
-    gutil.log('Bumped \'' + gutil.colors.cyan(path.basename(file.path)) + '\' ' + gutil.colors.magenta(opts.key) + ' to: ' + gutil.colors.cyan(ver));
+    // set key
+    if (!json[opts.key]) {
+      // log to user that key didn't exist before
+      log('Creating key', log.colors.red(opts.key), 'with version:', log.colors.cyan(ver));
+    }
+
+    if (dot) {
+      dot.str(opts.key, ver, json);
+    }
+
+    else {
+      json[opts.key] = ver;
+    }
+
+    file.contents = new Buffer(JSON.stringify(json, null, opts.indent || space(content)) + possibleNewline(content));
+
+    log('Bumped \'' + log.colors.cyan(path.basename(file.path)) +
+      '\' ' + log.colors.magenta(opts.key) +
+      ' to: ' + log.colors.cyan(ver));
+
     cb(null, file);
   });
 };
+
+function bump(opts) {
+  if (opts.version) {
+    return opts.version;
+  }
+
+  return semver.inc(opts.value, opts.type, opts.preid);
+}
 
 function setDefaultOptions(opts) {
   opts = opts || {};
@@ -67,13 +93,13 @@ function setDefaultOptions(opts) {
   }
   // if passed specific version - validate it
   if (opts.version && !semver.valid(opts.version, opts.type)) {
-    gutil.log('invalid version used as option', gutil.colors.red(opts.version));
+    log('invalid version used as option', log.colors.red(opts.version));
     opts.version = null;
   }
   return opts;
 }
 
-// Preserver new line at the end of a file
+// Preserve new line at the end of a file
 function possibleNewline(json) {
   var lastChar = (json.slice(-1) === '\n') ? '\n' : '';
   return lastChar;

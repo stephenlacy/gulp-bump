@@ -7,14 +7,16 @@
   "author": "Steve Lacy <me@slacy.me> (http://slacy.me)",
   "main": "./index.js",
   "dependencies": {
-    "dot-object": "^0.6.0",
-    "gulp-util": "^3.0.4",
-    "semver": "^4.3.1",
+    "dot-object": "^1.2.0",
+    "plugin-error": "^0.1.2",
+    "plugin-log": "^0.1.0",
+    "semver": "^5.0.3",
     "through2": "^0.5.1"
   },
   "devDependencies": {
     "mocha": "*",
-    "should": "*"
+    "should": "*",
+    "vinyl": "^0.5.3"
   },
   "scripts": {
     "test": "mocha --reporter spec"

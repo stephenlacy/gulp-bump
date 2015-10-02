@@ -99,11 +99,10 @@ gulp.task('bump', function(){
 ```
 #### Bumping version and outputting different files
 ```js
-
-
 // `fs` is used instead of require to prevent caching in watch (require caches)
-
 var fs = require('fs');
+var semver = require('semver');
+
 var getPackageJson = function () {
   return JSON.parse(fs.readFileSync('./package.json', 'utf8'));
 };

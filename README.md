@@ -32,7 +32,7 @@ If you are just requiring a bump for npm, consider using [npm version](https://d
 #### Install
 
 ```bash
-$ npm install gulp-bump --save
+$ npm install --save-dev gulp-bump 
 ```
 
 ## Example

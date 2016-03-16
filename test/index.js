@@ -81,24 +81,6 @@ describe('gulp-bump: JSON comparison fixtures', function() {
     bumpS.end();
   });
 
-  it('should set the correct version when supplied even if key did not exist', function(done) {
-    var fakeFile = new File({
-      contents: new Buffer('{}'),
-      path: 'test/fixtures/test.json'
-    });
-
-    var bumpS = bump({version: '0.0.2'});
-
-    bumpS.once('data', function(newFile) {
-      should.exist(newFile);
-      should.exist(newFile.contents);
-      JSON.parse(newFile.contents.toString()).version.should.equal('0.0.2');
-      return done();
-    });
-    bumpS.write(fakeFile);
-    bumpS.end();
-  });
-
   it('should bump prerelease version', function(done) {
     var fakeFile = new File({
       contents: new Buffer('{ "version": "0.0.1-0"}'),

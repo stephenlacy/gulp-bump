@@ -7,11 +7,11 @@
   "author": "Steve Lacy <me@slacy.me> (http://slacy.me)",
   "main": "./index.js",
   "dependencies": {
-    "dot-object": "^1.2.0",
     "plugin-error": "^0.1.2",
     "plugin-log": "^0.1.0",
     "semver": "^5.0.3",
-    "through2": "^0.5.1"
+    "through2": "^0.5.1",
+    "bump-regex": "^1.0.0"
   },
   "devDependencies": {
     "mocha": "*",

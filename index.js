@@ -7,7 +7,7 @@ var through = require('through2');
 var bump = require('bump-regex');
 var semver = require('semver');
 
-const PLUGIN_NAME = 'gulp-bump';
+var PLUGIN_NAME = 'gulp-bump';
 
 module.exports = function(opts) {
 

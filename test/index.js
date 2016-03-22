@@ -134,4 +134,25 @@ describe('gulp-bump: JSON comparison fixtures', function() {
     bumpS.write(fakeFile);
     bumpS.end();
   });
+
+  it('should return bumpData', function(done) {
+    var fakeFile = new File({
+      contents: new Buffer('{ "version": "0.1.0-zeta.1"}'),
+      path: 'test/fixtures/test.json'
+    });
+
+    var bumpS = bump({type: 'minor'});
+
+    bumpS.once('data', function(newFile) {
+      should.exist(newFile);
+      should.exist(newFile.contents);
+      should.exist(newFile.bumpData);
+      should.exist(newFile.bumpData.new);
+      should.exist(newFile.bumpData.prev);
+      should.exist(newFile.bumpData.type);
+      return done();
+    });
+    bumpS.write(fakeFile);
+    bumpS.end();
+  });
 });

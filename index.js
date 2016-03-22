@@ -30,7 +30,14 @@ module.exports = function(opts) {
       if (err) {
         return cb(new pluginError(PLUGIN_NAME, err));
       }
-      file.contents = new Buffer(res);
+      file.contents = new Buffer(res.str);
+
+      if (!opts.quiet) {
+      log('Bumped', log.colors.cyan(res.prev),
+        'to', log.colors.magenta(res.new),
+        'with type:', log.colors.cyan(res.type));
+      }
+      file.bumpData = res;
       cb(null, file);
     });
   });

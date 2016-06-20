@@ -12,6 +12,12 @@ gulp.task('bump', function(){
   .pipe(gulp.dest('./build'));
 });
 
+gulp.task('version', function(){
+  gulp.src('./package.json')
+  .pipe(bump({version: '1.2.3'}))
+  .pipe(gulp.dest('./version'));
+});
+
 gulp.task('key', function(){
   gulp.src('./key.json')
   .pipe(bump({key: 'appversion'}))

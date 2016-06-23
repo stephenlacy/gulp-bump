@@ -19,7 +19,7 @@ describe('Test failure cases cases in gulp-bump', function() {
 
     bumpS.on('error', function(e) {
       should.exist(e);
-      e.message.should.equal('Invalid semver');
+      e.message.should.equal('Invalid semver: version key "version" is not found in file');
       return done();
     });
     bumpS.write(fakeFile);

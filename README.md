@@ -36,7 +36,8 @@ $ npm install gulp-bump --save
 ```
 #### Breaking changes
 
-`gulp-bump` v2 supports Any valid semver in any filetype
+`gulp-bump` v2 supports Any valid semver in any filetype.
+  - v2 no longer creates the version [key] if it does not exist.
 
 ## Example
 

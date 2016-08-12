@@ -135,6 +135,23 @@ describe('gulp-bump: JSON comparison fixtures', function() {
     bumpS.end();
   });
 
+  it('should update prerelease tags without a version', function(done) {
+    var fakeFile = new File({
+      contents: new Buffer('{ "version": "0.1.0-zeta"}'),
+      path: 'test/fixtures/test.json'
+    });
+
+    var bumpS = bump({type: 'patch'});
+
+    bumpS.once('data', function(newFile) {
+      should.exist(newFile);
+      JSON.parse(newFile.contents.toString()).version.should.equal('0.1.0');
+      return done();
+    });
+    bumpS.write(fakeFile);
+    bumpS.end();
+  });
+
   it('should return bumpData', function(done) {
     var fakeFile = new File({
       contents: new Buffer('{ "version": "0.1.0-zeta.1"}'),

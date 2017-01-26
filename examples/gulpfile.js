@@ -18,6 +18,12 @@ gulp.task('version', function(){
   .pipe(gulp.dest('./version'));
 });
 
+gulp.task('xml', function(){
+  gulp.src('./file.xml')
+  .pipe(bump())
+  .pipe(gulp.dest('./build'));
+});
+
 gulp.task('key', function(){
   gulp.src('./key.json')
   .pipe(bump({key: 'appversion'}))

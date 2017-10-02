@@ -1,6 +1,6 @@
 # gulp-bump
-[![Build Status](https://travis-ci.org/stevelacy/gulp-bump.png?branch=master)](https://travis-ci.org/stevelacy/gulp-bump)
-[![NPM version](https://badge.fury.io/js/gulp-bump.png)](http://badge.fury.io/js/gulp-bump)
+[![Build Status](https://travis-ci.org/stevelacy/gulp-bump.svg?branch=master)](https://travis-ci.org/stevelacy/gulp-bump)
+[![NPM version](https://badge.fury.io/js/gulp-bump.svg)](http://badge.fury.io/js/gulp-bump)
 
 > Bump any version in any file which supports [semver](http://semver.org/) versioning
 

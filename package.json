@@ -7,7 +7,7 @@
   "author": "Steve Lacy <me@slacy.me> (http://slacy.me)",
   "main": "./index.js",
   "dependencies": {
-    "bump-regex": "^3.0.0",
+    "bump-regex": "^3.1.0",
     "plugin-error": "^0.1.2",
     "plugin-log": "^0.1.0",
     "semver": "^5.3.0",

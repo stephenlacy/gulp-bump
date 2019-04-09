@@ -43,8 +43,9 @@ gulp.task('phpconstant', function(){
   var constant = "MY_PLUGIN_VERSION";
   gulp.src('./plugin.php')
   .pipe(bump({
-      regex: new RegExp( "([<|\'|\"]?"+constant+"[>|\'|\"]?[ ]*[:=,]?[ ]*[\'|\"]?[a-z]?)(\\d+\\.\\d+\\.\\d+)(-[0-9A-Za-z\.-]+)?([\'|\"|<]?)", "i" ),
-    }))
+    key: constant, // for error reference
+    regex: new RegExp('([<|\'|"]?(' + constant + ')[>|\'|"]?[ ]*[:=,]?[ ]*[\'|"]?[a-z]?)(\\d+.\\d+.\\d+)(-[0-9A-Za-z.-]+)?(\\+[0-9A-Za-z\\.-]+)?([\'|"|<]?)', 'i')
+  }))
   .pipe(gulp.dest('./build'));
 });
 

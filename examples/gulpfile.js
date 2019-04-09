@@ -2,39 +2,48 @@
 
 var gulp = require('gulp');
 var bump = require('../');
+var patch = /--patch/.test(process.argv.slice(2)); // bump a patch?
 
 gulp.task('bump', function(){
-  var options = {
-    type: 'minor'
-  };
   gulp.src('./package.json')
-  .pipe(bump(options))
+  .pipe(bump({
+    type: patch ? 'patch' : 'minor'
+  }))
   .pipe(gulp.dest('./build'));
 });
 
 gulp.task('version', function(){
   gulp.src('./package.json')
-  .pipe(bump({version: '1.2.3'}))
+  .pipe(bump({
+    version: '1.2.3',
+    type: patch ? 'patch' : 'minor'
+  }))
   .pipe(gulp.dest('./version'));
 });
 
 gulp.task('xml', function(){
   gulp.src('./file.xml')
-  .pipe(bump())
+  .pipe(bump({
+    type: patch ? 'patch' : 'minor'
+  }))
   .pipe(gulp.dest('./build'));
 });
 
 // WordPress Theme: https://developer.wordpress.org/themes/basics/main-stylesheet-style-css/
 gulp.task('wptheme', function(){
   gulp.src('./style.css')
-  .pipe(bump())
+  .pipe(bump({
+    type: patch ? 'patch' : 'minor'
+  }))
   .pipe(gulp.dest('./build'));
 });
 
 // WordPress Plugin: https://developer.wordpress.org/plugins/the-basics/header-requirements/
 gulp.task('wpplugin', function(){
   gulp.src('./plugin.php')
-  .pipe(bump())
+  .pipe(bump({
+    type: patch ? 'patch' : 'minor'
+  }))
   .pipe(gulp.dest('./build'));
 });
 
@@ -43,20 +52,19 @@ gulp.task('phpconstant', function(){
   var constant = "MY_PLUGIN_VERSION";
   gulp.src('./plugin.php')
   .pipe(bump({
-      regex: new RegExp( "([<|\'|\"]?"+constant+"[>|\'|\"]?[ ]*[:=,]?[ ]*[\'|\"]?[a-z]?)(\\d+\\.\\d+\\.\\d+)(-[0-9A-Za-z\.-]+)?([\'|\"|<]?)", "i" ),
-    }))
+    type: patch ? 'patch' : 'minor'
+    key: constant, // for error reference
+    regex: new RegExp('([<|\'|"]?(' + constant + ')[>|\'|"]?[ ]*[:=,]?[ ]*[\'|"]?[a-z]?)(\\d+.\\d+.\\d+)(-[0-9A-Za-z.-]+)?(\\+[0-9A-Za-z\\.-]+)?([\'|"|<]?)', 'i')
+  }))
   .pipe(gulp.dest('./build'));
 });
 
 gulp.task('key', function(){
   gulp.src('./key.json')
-  .pipe(bump({key: 'appversion'}))
-  .pipe(gulp.dest('./build'));
-});
-
-gulp.task('patch', function(){
-  gulp.src('./package.json')
-  .pipe(bump())
+  .pipe(bump({
+    key: 'appversion',
+    type: patch ? 'patch' : 'minor'
+  }))
   .pipe(gulp.dest('./build'));
 });
 

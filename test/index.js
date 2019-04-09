@@ -172,4 +172,25 @@ describe('gulp-bump: JSON comparison fixtures', function() {
     bumpS.write(fakeFile);
     bumpS.end();
   });
+
+  it('should bump one key by default', function(done) {
+    var fakeFile = new File({
+      contents: new Buffer('{ "version": "0.1.0", "versionTwo": "1.0.0", "otherVersion": "2.0.0" }'),
+      path: 'test/fixtures/test.json'
+    });
+
+    var bumpS = bump({type: 'minor'});
+
+    bumpS.once('data', function(newFile) {
+      should.exist(newFile);
+      should.exist(newFile.contents);
+      var res = JSON.parse(newFile.contents.toString())
+      res.version.should.equal('0.2.0');
+      res.versionTwo.should.equal('1.0.0');
+      res.otherVersion.should.equal('2.0.0');
+      return done();
+    });
+    bumpS.write(fakeFile);
+    bumpS.end();
+  });
 });

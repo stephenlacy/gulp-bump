@@ -131,7 +131,7 @@ gulp.task('default', function(){
 });
 ```
 
-####You can view more examples in the [example folder.](https://github.com/stevelacy/gulp-bump/tree/master/examples)
+#### You can view more examples in the [example folder.](https://github.com/stevelacy/gulp-bump/tree/master/examples)
 
 ## Options
 
